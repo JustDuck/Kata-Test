@@ -1,7 +1,9 @@
-//Reference:  https://technologyconversations.com/2013/12/20/test-driven-development-tdd-example-walkthrough/
+package kataTestR1.java;
+
+//Reference1:  https://technologyconversations.com/2013/12/20/test-driven-development-tdd-example-walkthrough/
 //I also used a little of their code in parts
 
-//Reference: http://osherove.com/tdd-kata-1/
+//Reference2: http://osherove.com/tdd-kata-1/
 //https://github.com/vfarcic/TechnologyConversations/blob/master/src/test/java/com/wordpress/technologyconversations/tddbestpractices/StringCalculatorTest.java
 
 /**
@@ -28,6 +30,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
+// This is class is the original with commented out lines that I removed on 07/01/17
+
+// The project structure now is separated into two packages:
+
+//a.  kataTestR1.java; = contains 9 StringCalculatorX class files 
+
+//b. kataTestR1.test; = contains 9 StringCalculatorXTest class files with 2
+// for the JunitTestSuite.
+
+
 public class StringCalculator {
 
 	static int count = 0;
@@ -38,55 +50,10 @@ public class StringCalculator {
 
 	public static void main(String[] args) {
 
-		StringCalculator sc = new StringCalculator();
-
-		System.out.println("Got a string calculator object.");
-
 	}
 
-	/*
-	 * public static final void add(final String numbers) { String[]
-	 * numbersArray = numbers.split(","); if (numbersArray.length > 2) { throw
-	 * new
-	 * RuntimeException("Up to 2 numbers separated by comma (,) are allowed"); }
-	 * else { for (String number : numbersArray) { Integer.parseInt(number); //
-	 * If it is not a number, parseInt will throw an exception } } }
-	 */
-	/*
-	 * public static final int add(final String numbers) { // Changed void to
-	 * int String[] numbersArray = numbers.split(","); if (numbersArray.length >
-	 * 2) { throw new
-	 * RuntimeException("Up to 2 numbers separated by comma (,) are allowed"); }
-	 * else { for (String number : numbersArray) { if (!number.isEmpty()) {
-	 * Integer.parseInt(number); } } } return 0; // Added return }
-	 */
-	/*
-	 * public static int add(final String numbers) { int returnValue = 0;
-	 * String[] numbersArray = numbers.split(","); if (numbersArray.length > 2)
-	 * { throw new
-	 * RuntimeException("Up to 2 numbers separated by comma (,) are allowed"); }
-	 * for (String number : numbersArray) { if (!number.trim().isEmpty()) { //
-	 * After refactoring returnValue += Integer.parseInt(number); } } return
-	 * returnValue; }
-	 */
-	/*
-	 * public static int add(final String numbers) { int returnValue = 0;
-	 * String[] numbersArray = numbers.split(","); // Removed after exception //
-	 * if (numbersArray.length > 2) { // throw new
-	 * RuntimeException("Up to 2 numbers separated by comma (,) are allowed");
-	 * // } for (String number : numbersArray) { if (!number.trim().isEmpty()) {
-	 * // After refactoring returnValue += Integer.parseInt(number); } } return
-	 * returnValue; }
-	 */
-	// number 5
-	/*
-	 * public static int add(final String numbers) { int returnValue = 0;
-	 * String[] numbersArray = numbers.split(",|n"); // Added |n to the split
-	 * regex for (String number : numbersArray) { if (!number.trim().isEmpty())
-	 * { returnValue += Integer.parseInt(number.trim()); } } return returnValue;
-	 * }
-	 */
-	// number 6 is working with no errors
+	// Number 6 
+	
 	public static int add(final String numbers) {
 		String delimiter = ",|n";
 		String numbersWithoutDelimiter = numbers;
@@ -96,38 +63,19 @@ public class StringCalculator {
 			numbersWithoutDelimiter = numbers
 					.substring(numbers.indexOf("n") + 1);
 		}
+		System.out.println("numbersWithoutDelimiter " + numbersWithoutDelimiter
+				+ " delim" + delimiter);
+		
+		System.out.println("\n");
 		return add(numbersWithoutDelimiter, delimiter);
 	}
 
-	/*
-	 * private static int add(final String numbers, final String delimiter) {
-	 * int returnValue = 0; String[] numbersArray = numbers.split(delimiter);
-	 * for (String number : numbersArray) { if (!number.trim().isEmpty()) {
-	 * returnValue += Integer.parseInt(number.trim()); } }
-	 * System.out.println("The return value is " +returnValue); return
-	 * returnValue; }
-	 */
-	// number 7 does not like the list, so change compliance or add the code
-	// adding this corrected its;
-	// import java.util.ArrayList;
-	// import java.util.List;
-	/*
-	 * private static int add(final String numbers, final String delimiter) {
-	 * int returnValue = 0; String[] numbersArray = numbers.split(delimiter);
-	 * List negativeNumbers = new ArrayList(); for (String number :
-	 * numbersArray) { if (!number.trim().isEmpty()) { int numberInt =
-	 * Integer.parseInt(number.trim()); if (numberInt < 0) {
-	 * negativeNumbers.add(numberInt); } returnValue += numberInt; } } if
-	 * (negativeNumbers.size() > 0) { throw new
-	 * RuntimeException("Negatives not allowed: " + negativeNumbers.toString());
-	 * } return returnValue; }
-	 */
-	// number 8
-	// 
-	
+	// Number 8
+
+
 	private static int add(final String numbers, final String delimiter) {
 		int returnValue = 0;
-		count++;		
+		count++;
 		String[] numbersArray = numbers.split(delimiter);
 		List<Integer> negativeNumbers = new ArrayList<Integer>();
 		for (String number : numbersArray) {
@@ -144,15 +92,16 @@ public class StringCalculator {
 			throw new RuntimeException("Negatives not allowed: "
 					+ negativeNumbers.toString());
 		}
-		
+
 		System.out.println("Count at the end is " + count);
+		System.out.println("Your return Value is " + returnValue);
+		System.out.println("\n");
 		return returnValue;
 	}
 
-	
 	public static int addA(final String numbers) {
-		
-		String delimiter = ",|\n";		
+
+		String delimiter = ",|\n";
 		String numbersWithoutDelimiter = numbers;
 		if (numbers.startsWith("//")) {
 			int delimiterIndex = numbers.indexOf("//") + 2;
@@ -160,8 +109,11 @@ public class StringCalculator {
 			numbersWithoutDelimiter = numbers
 					.substring(numbers.indexOf("\n") + 1);
 		}
+		System.out.println("numbersWithoutDelimiter " + numbersWithoutDelimiter
+				+ " delim" + delimiter);
+		
+		System.out.println("\n");
 		return add(numbersWithoutDelimiter, delimiter);
 	}
-
 
 }
